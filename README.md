@@ -30,26 +30,96 @@ La relación entre módulos y las reglas de integridad (baja de trabajadores, pr
 con vigencia no retroactivo, raciones pagadas, etc.) están documentadas en
 [Funcionalidades.md](Funcionalidades.md).
 
-## Requisitos
+## Instalación y puesta en marcha
 
-- Python 3.10 o superior (probado en 3.13) con `tkinter`.
-- Dependencias:
+Requisitos: **Python 3.10 o superior** (probado en 3.13) y **Git**. En Windows,
+al instalar Python deja marcada la opción *tcl/tk and IDLE* (trae `tkinter`).
 
 ```bash
+# 1. Clonar el repositorio
+git clone https://github.com/AlexYuRa/Kelly-s-Food.git
+cd Kelly-s-Food
+
+# 2. (Opcional) Crear un entorno virtual
+py -m venv .venv
+.venv\Scripts\activate          # Linux/macOS: source .venv/bin/activate
+
+# 3. Instalar dependencias
 py -m pip install -r requirements.txt
+
+# 4. Ejecutar
+py app.py
 ```
 
 > En Linux/macOS usa `python3` en lugar de `py`.
 
-## Ejecutar
-
-```bash
-py app.py
-```
-
 La base de datos **`kellys_food.db` ya viene cargada** en el repositorio
-(operación de marzo 2023 a julio 2026, ≈ 164 000 raciones), así que no hace falta instalar ni configurar ningún
-servidor.
+(datos de prueba de marzo 2023 a julio 2026, ≈ 164 000 raciones), así que la app
+abre directamente en el Dashboard. No hay que instalar ni configurar ningún
+servidor de base de datos.
+
+**Problemas comunes**
+
+| Mensaje | Solución |
+|---|---|
+| `No module named 'customtkinter'` (u otro módulo) | Falta el paso 3. Si usas entorno virtual, actívalo antes. |
+| `No module named 'tkinter'` | Reinstala Python con la opción *tcl/tk* (Linux: `sudo apt install python3-tk`). |
+| `No existe la base de datos 'kellys_food.db'` | Ejecuta `py app.py` desde la carpeta del proyecto y verifica que el archivo se clonó. |
+| El Dashboard no muestra pronóstico / niveles de demanda | Faltan `pandas`, `numpy` o `scikit-learn`: repite el paso 3. |
+
+## Cómo ingresar datos
+
+Todo se hace desde la barra lateral izquierda. Las fechas se escriben siempre
+como **dd/mm/aaaa** y los montos en soles con punto decimal (`25.50`). No hace
+falta conocer ningún ID: todo se busca por nombre.
+
+El orden natural para registrar una quincena nueva es:
+
+1. **Trabajadores → registrar clientes**
+   - Pulsa **＋ Nuevo**, completa *Nombre*, *Apellido*, *Teléfono* y *Precio del
+     menú (S/)*, y pulsa **💾 Guardar**. El sistema genera el código solo.
+   - Para editar, selecciona a alguien de la lista, cambia los datos y guarda.
+   - **Dar de baja** lo saca de las listas para nuevas raciones sin borrar su
+     historial ni sus deudas. *Temporal* se puede reactivar; *Definitiva* no.
+
+2. **Raciones → abrir la quincena**
+   - Pulsa **＋ Nueva quincena**. Las fechas ya vienen sugeridas; puedes marcar
+     *Empezar con los trabajadores de la quincena anterior*.
+   - Usa ◀ ▶ o **Ir a hoy** para moverte entre quincenas.
+
+3. **Raciones → anotar el consumo diario**
+   - En **＋ Agregar trabajador** escribe parte del nombre y elige de la lista
+     (solo aparecen trabajadores activos).
+   - Haz **clic en la celda** del trabajador y el día, escribe la cantidad de
+     menús y pulsa **Enter** (baja a la fila siguiente) o **Tab** (pasa al día
+     siguiente). Deja la celda en `0` o vacía para quitar raciones.
+   - Al hacer clic en el nombre, el panel derecho muestra lo que debe; desde ahí
+     puedes **Registrar pago** o **Cambiar precio**.
+
+4. **Pagos → cobrar**
+   - Elige la quincena, selecciona al trabajador, escribe *Monto (S/)*, elige el
+     *Método de pago* y la *Fecha*, y pulsa **💾 Registrar pago**.
+   - *Mostrar solo los que deben* filtra la lista de deudores.
+
+5. **Menú → plato del día** *(opcional)*
+   - Escribe el plato en la tarjeta del día o elígelo de la lista; se guarda solo
+     al pulsar Enter o salir de la casilla. Las semanas pasadas son de solo lectura.
+
+6. **Compras → gastos en insumos**
+   - Completa *Fecha*, *Proveedor*, *Insumo*, *Cantidad* y *Costo total (S/)*, y
+     pulsa **💾 Guardar**. Si escribes un insumo que no existe, se crea (en kg).
+
+7. **Métodos de pago / Períodos de cobro** son catálogos: **＋ Nuevo**, completar
+   y **💾 Guardar**; seleccionar una fila para editarla o **🗑 Eliminar**.
+
+8. **Revisar resultados**
+   - **Dashboard**: elige *Desde* / *Hasta* y pulsa **Aplicar**.
+   - **Consultas / Reportes**: elige el reporte y el rango, pulsa **Ejecutar** y
+     exporta con **⬇ Exportar Excel** o **⬇ Exportar CSV**.
+
+> Los cambios se guardan al instante en `kellys_food.db`; no hay botón de
+> "guardar todo". Para volver a los datos originales del repositorio:
+> `git checkout -- kellys_food.db`.
 
 ## Estructura del proyecto
 
@@ -129,4 +199,3 @@ py -m PyInstaller --onefile --windowed --add-data "kellys_food.db;." app.py
 ```
 
 El ejecutable queda en `dist/app.exe`.
-# Kelly-s-Food
