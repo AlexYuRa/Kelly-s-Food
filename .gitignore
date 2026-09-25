@@ -1,0 +1,41 @@
+# --- Python ---
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+env/
+
+# --- PyInstaller (.exe) ---
+build/
+dist/
+*.spec
+
+# --- Configuración local del editor / asistentes ---
+.claude/
+.vscode/
+.idea/
+
+# --- Sistema operativo ---
+Thumbs.db
+desktop.ini
+.DS_Store
+
+# --- Bases de datos ---
+# Se versiona SOLO la BD operativa `kellys_food.db` (el programa la necesita
+# para arrancar). Copias de respaldo y archivos temporales de SQLite, no.
+*.db-journal
+*.db-wal
+*.db-shm
+kellys_food_backup_*.db
+kellys_food_denormalizado_backup.db
+# Copia maestra previa: no tiene la tabla `precio_trabajador`, está superada
+# por kellys_food.db.
+kellys_food_norm.db
+
+# --- Exportaciones generadas ---
+# Se regenera con:  py exportar_mysql.py
+backup_kellys_food_mysql.sql
+# Reportes exportados desde "Consultas / Reportes"
+*.csv
+*.xlsx

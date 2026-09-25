@@ -1,0 +1,13 @@
+# Normaliza finales de línea (el proyecto se edita en Windows)
+* text=auto
+
+*.py  text eol=lf
+*.md  text eol=lf
+*.txt text eol=lf
+*.sql text eol=lf
+
+# Binarios: nunca tocar finales de línea ni intentar diff de texto
+*.db   binary
+*.png  binary
+*.jpg  binary
+*.xlsx binary
