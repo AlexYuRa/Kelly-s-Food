@@ -69,9 +69,11 @@ servidor de base de datos.
 
 ## Cómo ingresar datos
 
-Todo se hace desde la barra lateral izquierda. Las fechas se escriben siempre
-como **dd/mm/aaaa** y los montos en soles con punto decimal (`25.50`). No hace
-falta conocer ningún ID: todo se busca por nombre.
+Todo se hace desde la barra lateral izquierda. Los montos van en soles con punto
+decimal (`25.50`). Las fechas se escriben como **dd/mm/aaaa** en Trabajadores,
+Raciones, Pagos y Compras, y como **AAAA-MM-DD** en Dashboard, Consultas y los
+catálogos (Métodos de pago, Períodos de cobro). No hace falta conocer ningún ID:
+en los módulos principales todo se busca por nombre.
 
 El orden natural para registrar una quincena nueva es:
 
@@ -113,7 +115,7 @@ El orden natural para registrar una quincena nueva es:
    y **💾 Guardar**; seleccionar una fila para editarla o **🗑 Eliminar**.
 
 8. **Revisar resultados**
-   - **Dashboard**: elige *Desde* / *Hasta* y pulsa **Aplicar**.
+   - **Dashboard**: escribe *Desde* / *Hasta* (AAAA-MM-DD) y pulsa **Aplicar**.
    - **Consultas / Reportes**: elige el reporte y el rango, pulsa **Ejecutar** y
      exporta con **⬇ Exportar Excel** o **⬇ Exportar CSV**.
 
@@ -147,7 +149,8 @@ KellysFood/
 │   ├── cluster_semanas.py # K-Means de semanas sobre variables conocidas
 │   └── pronostico.py      # SARIMAX + backtesting walk-forward
 ├── docs/
-│   └── sistema_prediccion_demanda.md
+│   ├── sistema_prediccion_demanda.md
+│   └── CONTEXTO_CLAUDE.md # Contexto para retomar el proyecto con Claude Code
 ├── Funcionalidades.md     # Documento funcional del sistema
 ├── Exposicion.md          # Guion de la exposición del curso
 └── requirements.txt
